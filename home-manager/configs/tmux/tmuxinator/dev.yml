@@ -1,0 +1,13 @@
+name: <%= @settings["name"] %>
+root: <%= @settings["workspace"] %>
+
+windows:
+- 📝:
+    panes:
+    - vim
+- 🚀:
+    panes:
+    - ls
+- 🚧:
+    panes:
+    - git status
