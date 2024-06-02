@@ -1,12 +1,95 @@
-{ config, pkgs, libs, ... }:
+{
+  config,
+  pkgs,
+  libs,
+  ...
+}:
 {
   home.packages = with pkgs; [
+    _1password-gui
+    acpi
+    bzip2
     nixos-shell
+    arc-icon-theme
+    arc-theme
+    arc-kde-theme
+    blender
+    brightnessctl
+    catppuccin-gtk
     cgdb
+    cryptsetup
+    discord
+    dhcpcd
+    extra-cmake-modules
+    i3lock
+    j4-dmenu-desktop
+    helvum
+    pamixer
+    latte-dock
+    libnotify
+    libpcap
+    libsForQt5.dolphin
+    libsForQt5.kdecoration
+    libsForQt5.kmail
+    libsForQt5.kmag
+    libsForQt5.gwenview
+    libsForQt5.networkmanager-qt
+    libsForQt5.qtstyleplugin-kvantum
+    libsForQt5.qt5.qtwayland
+    libsForQt5.spectacle
+    libsForQt5.xdg-desktop-portal-kde
+    libtool
+    libva
+    libvterm
+    lxappearance
     gdb
+    gimp
+    glxinfo
+    gnome.nautilus
+    gnumake
+    gnupg
+    gtk-engine-murrine
+    keepassxc
+    minecraft
+    networkmanager
+    networkmanager-fortisslvpn
+    noisetorch
+    pavucontrol
+    pinentry-qt
+    pipewire
+    prismlauncher
+    qt5ct
+    rofi
+    sierra-gtk-theme
+    sierra-breeze-enhanced
+    simplescreenrecorder
+    sqlite
+    sqlitebrowser
+    steam
+    teamspeak_client
+    teamspeak5_client
+    virt-manager
+    vlc
+    vulkan-headers
+    vulkan-loader
+    vulkan-tools
+    wireshark
+    xclip
+    xorg.xcursorthemes
+    xwayland
+    xdg-desktop-portal
     nix-du
     nix-index
     nix-prefetch
     nix-prefetch-git
   ];
+
+  programs.firefox = {
+    enable = true;
+    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+      extraPolicies = {
+        ExtensionSettings = { };
+      };
+    };
+  };
 }

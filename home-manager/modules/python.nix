@@ -1,8 +1,14 @@
-{ config, pkgs, libs, ... }:
+{
+  config,
+  pkgs,
+  libs,
+  ...
+}:
 {
   home.packages = with pkgs; [
-    python39
-    python39Packages.jedi
-    python39Packages.pynvim
+    python3
+    python3Packages.pip
+    python3Packages.jedi
+    python3Packages.pynvim
   ];
 }

@@ -1,4 +1,12 @@
-{ config, pkgs, libs, ... }:
 {
-  # home.file.".ssh/config".source = ../configs/ssh/ssh_config;
+  config,
+  pkgs,
+  libs,
+  ...
+}:
+{
+  programs.ssh = {
+    enable = true;
+    addKeysToAgent = "yes";
+  };
 }

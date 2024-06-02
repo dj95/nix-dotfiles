@@ -9,25 +9,24 @@
     This repository contains my opinionated configs, that I use on my daily-bases.
   </p>
   <br>
-   <a href="https://nixos.org">nixOS</a>&nbsp;&nbsp;|&nbsp;
-   <a href="https://github.com/nix-community/home-manager">home-manager</a>&nbsp;&nbsp;|&nbsp;
-   <a href="https://search.nixos.org/packages">nix package search</a>&nbsp;&nbsp;|&nbsp;
-   <a href="https://github.com/LnL7/nix-darwin">nix-darwin</a>
+  <a href="https://nixos.org">nixOS</a>&nbsp;&nbsp;|&nbsp;
+  <a href="https://github.com/nix-community/home-manager">home-manager</a>&nbsp;&nbsp;|&nbsp;
+  <a href="https://search.nixos.org/packages">nix package search</a>&nbsp;&nbsp;|&nbsp;
+  <a href="https://github.com/LnL7/nix-darwin">nix-darwin</a>
 </div>
-
 
 ## 📦 Requirements
 
 - nix (with flakes support!)
 - home-manager
 
-
 ## 📋 Installed and configured programs
 
-- kitty
+- wezterm
 - fish
+- zellij
 - neovim
-- emacs
+- yabai
 - git
 - ssh
 - programming languages
@@ -35,56 +34,34 @@
   - nodejs (with typescript)
   - php
   - python
+  - rust
 - various command line tools (htop, watch, curl, ...)
 - devops tools (kubectl, docker-compose, kustomize, helm, ...)
 
-
 ## 🚀 Usage
 
-The repository contains two different configurations: one for my `linux-desktop` and one for my `macbook-pro`.
-With flakes support, home-manager is able to process the related profile by adding it as a hash parameter behind the path of the home-manager directory.
+The repository contains three different configurations: nixos, my personal MBP and the work MBP.
+With flakes support, nix, nix-darwin and home-manager are able to process the related profile by adding it as a hash parameter behind the path of the home-manager directory.
 
 ```sh
-$ cd home-manager
-$ home-manager switch --flakes .#linux-desktop
+darwin-rebuild switch --flakes .#Daniels-MacBook-Pro
 ```
 
+*or*
+
+```sh
+nix-os switch --flakes .#nixos
+```
 
 ## 🏗 Install the requirements
 
 **macOS**
 
 ``` sh
-$ sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume
-$ nix-env -iA nixpkgs.nixUnstable
-$ cat /etc/nix/nix.conf
-experimental-features = nix-command flakes
-$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-$ nix-channel --update
-$ nix-shell '<home-manager>' -A install
-```
+# install nix
+sh <(curl -L https://nixos.org/nix/install)
 
-**linux**
-
-``` sh
-$ sh <(curl -L https://nixos.org/nix/install)
-$ nix-env -iA nixpkgs.nixUnstable
-$ cat /etc/nix/nix.conf
-experimental-features = nix-command flakes
-$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
-$ nix-channel --update
-$ nix-shell '<home-manager>' -A install
-```
-
-
-## ❄️ Enable nix flakes support
-
-Since nix flakes are not enable by default, we need to enable the feature flag by installing the `nixUnstable` package and
-adding the last line of the code block to the nix configuration. When you've followed the previous section, you do not need
-to run these steps.
-
-```sh
-$ nix-env -iA nixpkgs.nixUnstable
-$ cat /etc/nix/nix.conf
-experimental-features = nix-command flakes
+# install nix-darwin
+nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
+./result/bin/darwin-installer
 ```

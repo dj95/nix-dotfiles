@@ -1,14 +1,41 @@
-{ config, pkgs, libs, ... }:
+{
+  config,
+  pkgs,
+  libs,
+  ...
+}:
 {
   home.packages = with pkgs; [
     ansible
-    azure-cli
+    argo-helm-updater
+    argocd
+    cilium-cli
+    cmctl
+    colima
+    dive
+    docker-client
     docker-compose
-    fluxcd
+    dogdns
+    jless
+    kind
+    kubecolor
     kubectl
+    kubectl-neat
+    kubectl-validate
     kubectx
     kubernetes-helm
+    kube3d
     kustomize
+    kustomize-quick-create
+    kuttl
+    mutagen
+    mutagen-compose
+    opentofu
+    popeye
+    pwgen
+    stern
     terraform
+    velero
+    yazi
   ];
 }
