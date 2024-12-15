@@ -39,10 +39,10 @@ lint.linters.staticcheck.stdin = false
 
 lint.linters_by_ft = {
 	dockerfile = { "hadolint" },
-	go = { "staticcheck" },
+	go = { "golangcilint" },
 	javascript = { "eslint_d" },
 	javascriptreact = { "eslint_d" },
-	markdown = { "markdownlint" },
+	markdown = { "markdownlint", "vale" },
 	nix = { "nix" },
 	php = { "phpstan" },
     python = { "ruff" },

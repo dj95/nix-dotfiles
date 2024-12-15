@@ -50,7 +50,7 @@
     gnupg
     gtk-engine-murrine
     keepassxc
-    minecraft
+    # minecraft
     networkmanager
     networkmanager-fortisslvpn
     noisetorch

@@ -11,7 +11,6 @@
     extraConfig = ''
       monitor=,preferred,auto,1
       monitor=DP-2,preferred,0x0,1.5
-      monitor=DP-1,preferred,2560x0,1.0
 
       exec-once = hyprpaper --config /home/daniel/.config/hypr/hyprpaper.conf
       exec-once = waybar
@@ -21,7 +20,8 @@
       env = XDG_SESSION_TYPE,wayland
       env = GBM_BACKEND,nvidia-drm
       env = __GLX_VENDOR_LIBRARY_NAME,nvidia
-      env = WLR_NO_HARDWARE_CURSORS,1
+      env = ELECTRON_OZONE_PLATFORM_HINT,auto
+      env = NVD_BACKEND,direct
 
       input {
         kb_layout = us

@@ -57,7 +57,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		-- lsp
 		map("n", "<leader>cx", function()
-			require("trouble").toggle({ mode = "workspace_diagnostics" })
+			require("trouble").toggle({ mode = "diagnostics" })
 		end)
 		map("n", "<leader>ct", function()
 			require("trouble").toggle({ mode = "todo" })
@@ -89,6 +89,10 @@ map("v", "<leader>gp", ":Gen<CR>")
 map("n", "<leader>cc", function()
 	require("mdeval").eval_code_block()
 end)
+
+-- avante
+map("n", "<leader>aa", function() require("avante.api").ask() end)
+map("v", "<leader>aa", function() require("avante.api").ask() end)
 
 -- learn things the hard way...
 --

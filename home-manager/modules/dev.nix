@@ -6,8 +6,13 @@
 }:
 {
   home.packages = with pkgs; [
+    cmake
+    frizbee
     karate
     just
+    hugo
+    ollama
+    stylelint
   ];
 
   programs.direnv = {

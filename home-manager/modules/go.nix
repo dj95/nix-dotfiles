@@ -9,5 +9,9 @@
     go
     golint
     gosec
+    gomodifytags
+    gotests
+    gotestsum
+    gore
   ];
 }

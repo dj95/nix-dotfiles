@@ -16,6 +16,7 @@
     docker-client
     docker-compose
     dogdns
+    gitlab-ci-local
     jless
     kind
     kubecolor
@@ -25,6 +26,8 @@
     kubectx
     kubernetes-helm
     kube3d
+    kube-review
+    kluctl
     kustomize
     kustomize-quick-create
     kuttl
@@ -35,6 +38,8 @@
     pwgen
     stern
     terraform
+    terraform-docs
+    tfsec
     velero
     yazi
   ];

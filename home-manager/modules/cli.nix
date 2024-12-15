@@ -13,21 +13,23 @@
     curl
     difftastic
     du-dust
-    eza
     fd
     fontconfig
     fzf
     gcc
     gnugrep
+    glow
     htop
     jq
     maple-mono-NF
+    sketchybar-app-font
     nmap
-    ollama
+    # ollama
     openssl
     pv
     ripgrep
     rsync
+    smartcat
     tailspin
     terminaltexteffects
     tree
@@ -54,7 +56,22 @@
         };
         file = "/Catppuccin-mocha.tmTheme";
       };
+      RosePine = {
+        src = pkgs.fetchFromGitHub {
+          owner = "rose-pine";
+          repo = "tm-theme"; # Bat uses sublime syntax for its themes
+          rev = "c4235f9a65fd180ac0f5e4396e3a86e21a0884ec";
+          sha256 = "sha256-jji8WOKDkzAq8K+uSZAziMULI8Kh7e96cBRimGvIYKY=";
+        };
+        file = "/dist/themes/rose-pine.tmTheme";
+      };
     };
+  };
+
+  programs.eza = {
+    enable = true;
+    enableFishIntegration = true;
+    icons = "auto";
   };
 
   xdg.configFile."tailspin/config.toml".text = ''

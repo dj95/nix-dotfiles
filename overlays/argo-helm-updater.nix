@@ -10,7 +10,7 @@ final: prev: {
       sha256 = "sha256-kYIPSFDQeAqcYQiGlc4o/EqZlTKgyojOUjY5mYOVgPE=";
     };
 
-    cargoSha256 = "sha256-aVMUcuGVROA3KdMr3bNtsHz7lSNe7iDmozdr1O8mjzU=";
+    cargoShaHash = "sha256-aVMUcuGVROA3KdMr3bNtsHz7lSNe7iDmozdr1O8mjzU=";
 
     nativeBuildInputs = [
       prev.pkgs.pkg-config

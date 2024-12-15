@@ -12,7 +12,6 @@ with lib;
   # Issue: https://github.com/nix-community/home-manager/issues/1341
   environment.systemPackages = with pkgs; [
     nix
-    kitty
     skhd
     terminal-notifier
     material-design-icons
@@ -35,7 +34,7 @@ with lib;
       rm -rf ~/Applications/Nix\ Apps
       mkdir -p ~/Applications/Nix\ Apps
       srcs=()
-      while read src; do
+      while read -r src; do
         srcs+=("$src")
       done < <(find ${env}/Applications -maxdepth 1 -type l)
       if [[ "''${#srcs[@]}" != 0 ]]; then

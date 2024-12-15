@@ -26,19 +26,21 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot = {
     enable = true;
-    configurationLimit = 2;
+    configurationLimit = 1;
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
   nixpkgs.overlays = [
     (import ../../overlays/argo-helm-updater.nix)
+    (import ../../overlays/frizbee.nix)
     (import ../../overlays/gherkin-lint.nix)
     (import ../../overlays/kubectx.nix)
     (import ../../overlays/kustomize-quick-create.nix)
-    (import ../../overlays/lsp.nix)
-    (import ../../overlays/zellij.nix)
     (import ../../overlays/mutagen-compose.nix)
+    (import ../../overlays/terminaltexteffects.nix)
     (final: prev: { zjstatus = inputs.zjstatus.packages.${prev.system}.default; })
+    (final: prev: { zj-quit = inputs.zj-quit.packages.${prev.system}.default; })
+    (final: prev: { argo-helm-updater = inputs.argo-helm-updater.packages.${prev.system}.default; })
   ];
 
   # networking.hostName = "nixos"; # Define your hostname.
@@ -83,62 +85,68 @@ in
       enable = true;
     };
   };
-  environment.variables.WLR_NO_HARDWARE_CURSORS = "1";
-  environment.sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
+  environment.variables.NIXOS_OZONE_WL = "1";
+  environment.variables.VK_DRIVER_FILES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.x86_64.json";
   environment.sessionVariables.LIBVA_DRIVER_NAME = "nvidia";
-  environment.sessionVariables.__GLX_VENDOR_LIBRARY_NAME = "nvidia";
   environment.sessionVariables.GBM_BACKEND = "nvidia-drm";
+  environment.sessionVariables.__GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  environment.sessionVariables.XDG_SESSION_TYPE = "wayland";
+  environment.sessionVariables.NVD_BACKEND = "direct";
+
+  services.libinput = {
+    enable = true;
+
+    mouse = {
+      accelProfile = "flat";
+    };
+  };
 
   services.xserver = {
     enable = true;
 
-    libinput = {
-      enable = true;
 
-      mouse = {
-        accelProfile = "flat";
-      };
-    };
-
-    xrandrHeads = [
-      {
-        output = "DP-4.8";
-        primary = true;
-        monitorConfig = ''
-          Option "Enable" "true"
-          Option "PreferredMode" "2560x1440"
-          Option "DPMS" "false"
-        '';
-      }
-      {
-        output = "DP-4.1.8";
-        monitorConfig = ''
-          Option "Enable" "true"
-          Option "PreferredMode" "2560x1440"
-          Option "DPMS" "false"
-        '';
-      }
-    ];
-
-    screenSection = ''
-      Option         "metamodes" "DP-4.8: nvidia-auto-select +0+560 {ForceFullCompositionPipeline=On}, DP-4.1.8: nvidia-auto-select +2560+0 {ForceFullCompositionPipeline=On, Rotation=left}"
-      Option         "AllowIndirectGLXProtocol" "off"
-      Option         "TripleBuffer" "on"
-    '';
-
-    displayManager = {
-      startx = {
-        enable = true;
-      };
-      sddm = {
-        enable = true;
-      };
-    };
+    # xrandrHeads = [
+    #   {
+    #     output = "DP-4.8";
+    #     primary = true;
+    #     monitorConfig = ''
+    #       Option "Enable" "true"
+    #       Option "PreferredMode" "2560x1440"
+    #       Option "DPMS" "false"
+    #     '';
+    #   }
+    #   {
+    #     output = "DP-4.1.8";
+    #     monitorConfig = ''
+    #       Option "Enable" "true"
+    #       Option "PreferredMode" "2560x1440"
+    #       Option "DPMS" "false"
+    #     '';
+    #   }
+    # ];
+    #
+    # screenSection = ''
+    #   Option         "metamodes" "DP-4.8: nvidia-auto-select +0+560 {ForceFullCompositionPipeline=On}, DP-4.1.8: nvidia-auto-select +2560+0 {ForceFullCompositionPipeline=On, Rotation=left}"
+    #   Option         "AllowIndirectGLXProtocol" "off"
+    #   Option         "TripleBuffer" "on"
+    # '';
 
     videoDrivers = [ "nvidia" ];
     xkb = {
       layout = "us";
       options = "ctrl:nocaps,compose:rwin";
+    };
+  };
+
+  services.displayManager = {
+    # startx = {
+    #   enable = true;
+    # };
+    sddm = {
+      enable = true;
+      wayland = {
+        enable = true;
+      };
     };
   };
 
@@ -187,6 +195,7 @@ in
     openvswitch
     swaylock
     nvidia-vaapi-driver
+    egl-wayland
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

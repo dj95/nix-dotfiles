@@ -17,7 +17,9 @@
 --
 
 -- load all relevant modules that are language relevant
+require "config.general.colorizer"
 require "config.general.comment"
+require "config.general.copilot"
 require "config.general.folding"
 require "config.general.leap"
 require "config.general.neogit"

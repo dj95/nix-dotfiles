@@ -16,11 +16,14 @@
 -- Date: 25.09.2021
 --
 
-local vim = vim
 local headlines = require('headlines')
 
 headlines.setup({
     markdown = {
+        bullets = {},
+        fat_headlines = true,
+        fat_headline_upper_string = "▁",
+        fat_headline_lower_string = "▔",
         headline_highlights = {
             "Headline1",
             "Headline2",
@@ -29,5 +32,8 @@ headlines.setup({
             "Headline5",
             "Headline6",
         },
+        dash_string = "─",
+        quote_string = "║",
     },
+
 })

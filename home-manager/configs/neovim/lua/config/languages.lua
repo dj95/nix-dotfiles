@@ -20,9 +20,11 @@
 require "config.languages.autopair"
 require "config.languages.cmp"
 require "config.languages.formatter"
+require "config.languages.inline-diagnostic"
 require "config.languages.linter"
 require "config.languages.lsp"
 require "config.languages.lspsaga"
+require "config.languages.markview"
 require "config.languages.trouble"
 require "config.languages.treesitter"
 

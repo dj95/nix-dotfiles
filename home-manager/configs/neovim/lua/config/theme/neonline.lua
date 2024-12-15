@@ -19,7 +19,8 @@
 local vim = vim
 local lualine = require('lualine')
 local lsp_progress = require('lsp-progress')
-local colors = require 'catppuccin.palettes'.get_palette() -- fetch colors with API
+local colors = require('catppuccin.palettes').get_palette()
+-- local colors = require 'rose-pine.palette' -- fetch colors with API
 
 lsp_progress.setup({
     format = function(client_messages)
@@ -46,20 +47,21 @@ local conditions = {
     end,
 }
 
-colors.bg = colors.mantle
-colors.bg_statusline = colors.mantle
+colors.bg = "#0e0801"
+colors.bg_statusline = "#0e0801"
+colors.foam_dawn = "#56949f"
 
 local mode_color = {
     n = colors.blue,
     i = colors.green,
     v = colors.maroon,
-    [''] = colors.maroon,
+    ['^V'] = colors.maroon,
     V = colors.maroon,
     c = colors.mauve,
     no = colors.sky,
     s = colors.peach,
     S = colors.peach,
-    [''] = colors.peach,
+    ['^S'] = colors.peach,
     ic = colors.yellow,
     R = colors.mauve,
     Rv = colors.mauve,
@@ -71,6 +73,10 @@ local mode_color = {
     ['!'] = colors.maroon,
     t = colors.maroon,
 }
+
+-- colors.bg = "#33362E"
+-- colors.bg_statusline = colors.muted
+-- colors.foam_dawn = "#56949f"
 
 local config = {
     options = {
@@ -85,8 +91,8 @@ local config = {
             -- We are going to use lualine_c an lualine_x as left and
             -- right section. Both are highlighted by c theme .  So we
             -- are just setting default looks o statusline
-            normal = { c = { fg = colors.fg_statusline, bg = colors.mantle } },
-            inactive = { c = { fg = colors.fg_statusline, bg = colors.mantle } },
+            normal = { c = { fg = colors.fg_statusline, bg = colors.bg } },
+            inactive = { c = { fg = colors.fg_statusline, bg = colors.bg } },
         },
     },
     sections = {
@@ -118,7 +124,7 @@ local config = {
                             "hi LualineViMode guifg="
                             .. mode_color[vim.fn.mode()]
                             .. " guibg="
-                            .. colors.mantle
+                            .. colors.bg
                             .. " gui=bold cterm=bold"
                         )
                     end
@@ -129,12 +135,11 @@ local config = {
                 color = "LualineViMode",
                 fmt = string.upper,
                 padding = { right = 1, left = 1 },
-            },
-            {
+            },{
                 'filename',
                 path = 1,
                 shorting_target = 40,
-                color = { fg = colors.overlay2 },
+                color = { fg = colors.overlay2, gui = 'bold' },
             },
             {
                 'diff',
@@ -161,12 +166,12 @@ local config = {
             },
             {
                 'location',
-                color = { fg = colors.overlay0 },
+                color = { fg = colors.overlay2 },
                 padding = { left = 1, right = 1 },
             },
             {
                 'progress',
-                color = { fg = colors.overlay0 },
+                color = { fg = colors.overlay2 },
                 padding = { left = 0, right = 1 },
             },
             {
@@ -214,14 +219,14 @@ local config = {
                 function()
                     return " "
                 end,
-                color = { bg = colors.overlay2 },
+                color = { bg = colors.foam },
                 padding = { right = 0 },
             },
             {
                 'filename',
                 path = 1,
                 shorting_target = 40,
-                color = { fg = colors.overlay0 },
+                color = { fg = colors.muted },
             },
         },
         lualine_x = {},

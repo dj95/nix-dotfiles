@@ -67,11 +67,12 @@ lspconfig.rust_analyzer.setup({
         },
     }
 })
-lspconfig.tsserver.setup({ capabilities = capabilities })
+lspconfig.ts_ls.setup({ capabilities = capabilities })
 lspconfig.vimls.setup({ capabilities = capabilities })
 lspconfig.lemminx.setup({ capabilities = capabilities })
 lspconfig.terraformls.setup({ capabilities = capabilities })
 lspconfig.typst_lsp.setup({ capabilities = capabilities })
+lspconfig.vale_ls.setup({ capabilities = capabilities })
 lspconfig.yamlls.setup({
     capabilities = capabilities,
     settings = {
@@ -84,17 +85,6 @@ lspconfig.yamlls.setup({
             keyOrdering = false,
         },
     },
-})
-
--- enable inlay hints
-vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-    callback = function(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if client.server_capabilities.inlayHintProvider then
-            vim.lsp.inlay_hint.enable(true)
-        end
-    end
 })
 
 -- pretty lsp hint signs

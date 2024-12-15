@@ -58,7 +58,7 @@ set.ruler        = false
 -- redraw
 set.lazyredraw = true
 set.redrawtime = 1000
-set.termsync   = false
+set.termsync   = true
 
 -- dont wait that long when running in tmux to accept the escape key
 set.updatetime  = 500

@@ -51,12 +51,9 @@ let
     # notifications
     nvim-notify
 
-    # folds
-    origami-nvim
-
     # colorscheme
     catppuccin-nvim
-    tokyonight-nvim
+    rose-pine
 
     # faster motions
     leap-nvim
@@ -69,13 +66,15 @@ let
     nvim-web-devicons
 
     # different syntax highlightnings
-    vim-just
     nginx-vim
     comment-nvim
     vim-kubernetes
     typst-vim
     fzf-lua
     headlines-nvim
+    markview-nvim
+    hmts-nvim
+    vim-just
 
     # tree-sitter with required grammars
     (nvim-treesitter.withPlugins (
@@ -99,6 +98,7 @@ let
         tree-sitter-json
         tree-sitter-json5
         tree-sitter-jsonc
+        tree-sitter-just
         tree-sitter-kdl
         tree-sitter-latex
         tree-sitter-lua
@@ -132,6 +132,8 @@ let
     zoomwintab-vim
     zen-mode-nvim
 
+    avante-nvim
+
     #
     # Autocompletion
     #
@@ -140,12 +142,16 @@ let
     nvim-lspconfig
 
     # cmp autocompletion
-    nvim-cmp
-    cmp-buffer
-    cmp-cmdline
+    # nvim-cmp
+    magazine-nvim
+    mag-cmp-lua
+    mag-cmp-buffer
+    mag-cmp-cmdline
+    # cmp-buffer
+    # cmp-cmdline
     cmp-emoji
     cmp-nvim-lsp
-    cmp-nvim-lua
+    # cmp-nvim-lua
     cmp-path
     cmp-tmux
     cmp-nvim-ultisnips
@@ -153,14 +159,17 @@ let
     lspsaga-nvim
     conform-nvim
     nvim-lint
-    copilot-vim
-    cmp-copilot
+    nvim-colorizer-lua
+    copilot-lua
+    img-clip-nvim
+    avante-nvim
 
     # java
     nvim-jdtls
 
     # show workspace diagnostics in a split
     trouble-nvim
+    tiny-inline-diagnostic-nvim
 
     # todo comments
     todo-comments-nvim
@@ -172,7 +181,7 @@ in
     tree-sitter
 
     # language servers
-    nodePackages.bash-language-server # bash
+    bash-language-server # bash
     llvm # clangd
     nodePackages.vscode-langservers-extracted # html, css, json
     nodePackages.dockerfile-language-server-nodejs # docker
@@ -189,6 +198,8 @@ in
     nodePackages.typescript-language-server # typescript
     nodePackages.vim-language-server # vim
     nodePackages.yaml-language-server # yaml
+    lemminx # xml
+    vale-ls # prose
 
     # linter and formatter
     nodePackages.eslint_d # typescript
@@ -208,6 +219,7 @@ in
     tflint
     typstfmt
     ruff
+    vale # prose
     xmlformat
     yamlfmt
     yamllint

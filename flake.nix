@@ -21,9 +21,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-    };
+    # hyprland = {
+    #   url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    # };
 
     nur = {
       url = "github:nix-community/NUR";
@@ -31,6 +31,14 @@
 
     zjstatus = {
       url = "github:dj95/zjstatus";
+    };
+
+    zj-quit = {
+      url = "github:dj95/zj-quit";
+    };
+
+    zj-smart-sessions = {
+      url = "github:dj95/zj-smart-sessions";
     };
 
     argo-helm-updater = {
@@ -45,7 +53,7 @@
       nixpkgs,
       darwin,
       home-manager,
-      hyprland,
+      # hyprland,
       nur,
       zjstatus,
       argo-helm-updater,
@@ -56,15 +64,20 @@
 
       overlays = with inputs; [
         (import ./overlays/crossplane.nix)
+        (import ./overlays/frizbee.nix)
         (import ./overlays/gherkin-lint.nix)
         (import ./overlays/kubectx.nix)
+        (import ./overlays/kube-review.nix)
         (import ./overlays/kustomize-quick-create.nix)
-        (import ./overlays/lsp.nix)
+        (import ./overlays/logcli.nix)
         (import ./overlays/mutagen-compose.nix)
         (import ./overlays/yabai.nix)
+        (import ./overlays/sketchybar.nix)
         (import ./overlays/terminaltexteffects.nix)
-        # (import ./overlays/zellij.nix)
+        (import ./overlays/zellij.nix)
         (final: prev: { zjstatus = zjstatus.packages.${prev.system}.default; })
+        (final: prev: { zj-quit = zj-quit.packages.${prev.system}.default; })
+        (final: prev: { zj-smart-sessions = zj-smart-sessions.packages.${prev.system}.default; })
         (final: prev: { argo-helm-updater = argo-helm-updater.packages.${prev.system}.default; })
       ];
     in
@@ -82,10 +95,10 @@
               defaults = import ./hosts/darwin-mbp/defaults.nix;
               general = import ./hosts/darwin-mbp/general.nix;
               yabai = import ./hosts/darwin-mbp/yabai.nix;
+              aerospace = import ./hosts/darwin-mbp/aerospace.nix;
             }
             ++ [
               ./hosts/darwin-mbp/configuration.nix
-              nur.nixosModules.nur
               home-manager.darwinModules.home-manager
               {
                 users.users.daniel.home = "/Users/daniel";
@@ -101,6 +114,8 @@
 
                   imports = [
                     # general
+                    ./home-manager/modules/aerospace.nix
+                    ./home-manager/modules/alacritty.nix
                     ./home-manager/modules/cli.nix
                     ./home-manager/modules/fish.nix
                     ./home-manager/modules/git.nix
@@ -108,6 +123,7 @@
                     ./home-manager/modules/lldb.nix
                     ./home-manager/modules/nix-utilities.nix
                     ./home-manager/modules/ssh.nix
+                    ./home-manager/modules/rio.nix
                     ./home-manager/modules/wezterm.nix
                     ./home-manager/modules/zed.nix
                     ./home-manager/modules/zellij.nix
@@ -126,59 +142,6 @@
                 };
               }
             ];
-        };
-      };
-
-      nixosConfigurations = {
-        nixos = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            ./hosts/nixos-desktop/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-
-              # import relevant modules for this configuration
-              home-manager.users.daniel = {
-                # set the user nix config
-                xdg.configFile."nix/nix.conf".source = ./home-manager/configs/nix/nix.conf;
-                nixpkgs.overlays = overlays;
-
-                imports = [
-                  hyprland.homeManagerModules.default
-
-                  # general
-                  ./home-manager/modules/hyprland.nix
-                  ./home-manager/modules/cli.nix
-                  ./home-manager/modules/fish.nix
-                  ./home-manager/modules/git.nix
-                  ./home-manager/modules/home-manager.nix
-                  ./home-manager/modules/kitty.nix
-                  ./home-manager/modules/nix-utilities.nix
-                  ./home-manager/modules/linux-only.nix
-                  ./home-manager/modules/wezterm.nix
-                  ./home-manager/modules/zellij.nix
-
-                  # development
-                  ./home-manager/modules/dev.nix
-                  ./home-manager/modules/neovim.nix
-                  ./home-manager/modules/ops.nix
-
-                  # programming languages
-                  ./home-manager/modules/go.nix
-                  ./home-manager/modules/java.nix
-                  ./home-manager/modules/node.nix
-                  ./home-manager/modules/php.nix
-                  ./home-manager/modules/python.nix
-                  ./home-manager/modules/rust.nix
-                ];
-              };
-            }
-          ];
         };
       };
     };

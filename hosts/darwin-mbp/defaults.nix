@@ -11,7 +11,8 @@
     NSAutomaticCapitalizationEnabled = false;
     NSAutomaticDashSubstitutionEnabled = false;
     NSAutomaticPeriodSubstitutionEnabled = false;
-    _HIHideMenuBar = false;
+    NSWindowShouldDragOnGesture = true;
+    _HIHideMenuBar = true;
     AppleFontSmoothing = 1;
   };
 
@@ -26,7 +27,7 @@
   # Dock and Mission Control
   system.defaults.dock = {
     autohide = true;
-    expose-group-by-app = false;
+    expose-group-apps = true;
     mru-spaces = false;
     tilesize = 32;
     orientation = "left";

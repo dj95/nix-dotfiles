@@ -20,6 +20,7 @@ local vim = vim
 local set = vim.o
 
 require("config.theme.catppuccin")
+-- require("config.theme.rosepine")
 
 -- theme the search highlights
 set.hlsearch = true
@@ -29,6 +30,4 @@ require("config.theme.neonline")
 require("config.theme.devicons")
 require("config.theme.gitsigns")
 require("config.theme.indentline")
-require("config.theme.origami")
 require("config.theme.twilight")
-require("config.theme.headlines")

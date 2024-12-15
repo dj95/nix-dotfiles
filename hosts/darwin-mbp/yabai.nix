@@ -7,7 +7,7 @@
 with lib;
 {
   services.yabai = {
-    enable = true;
+    enable = false;
     package = pkgs.yabai;
     config = {
       # general
@@ -64,7 +64,7 @@ with lib;
   };
 
   services.skhd = {
-    enable = true;
+    enable = false;
     skhdConfig = ''
       # set layout
       cmd + ctrl - t : yabai -m space --layout bsp

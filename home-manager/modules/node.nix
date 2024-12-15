@@ -10,5 +10,6 @@
     yarn
     nodePackages.pnpm
     nodePackages.typescript
+    nodePackages.js-beautify
   ];
 }

@@ -23,6 +23,12 @@ let
     sha256 = "sha256-wQlYQyqklU/79K2OXRZXg5LvuIugK7vhHgpahpLFaOw=";
   };
 
+  rosepine_theme_git = pkgs.fetchgit {
+    url = "https://github.com/rose-pine/fish";
+    rev = "38aab5baabefea1bc7e560ba3fbdb53cb91a6186";
+    sha256 = "sha256-bSGGksL/jBNqVV0cHZ8eJ03/8j3HfD9HXpDa8G/Cmi8=";
+  };
+
   goose = pkgs.fetchgit {
     url = "https://github.com/raesene/goose_effects";
     rev = "938284b1eaa2b35e5721893afd00d600049a2870";
@@ -115,7 +121,7 @@ in
 
         if [ "$name" = "" ]
           pushd ~/Developer
-          set directory "$(fd -t d | fzf)"
+          set directory "$(fd -t d | fzf --preview 'bash -c "[[ -f {}/README.md ]] && glow {}/README.md || eza -l --icons --color=always --no-time {}"')"
 
           if [ "$directory" = "" ]
             return
@@ -134,7 +140,17 @@ in
           return
         end
 
-        zellij attach -c "$name"
+        set cols (tput cols)
+        set rows (tput lines)
+        set ratio (math $cols / $rows)
+
+        set layout "default"
+
+        if [ $ratio -gt 8.0 ]
+          set layout "wide"
+        end
+
+        zellij --layout "$layout" attach -c "$name"
       '';
       direnvim = ''
         eval (${pkgs.direnv}/bin/direnv export fish)
@@ -156,6 +172,7 @@ in
     shellInit = ''
       # set the editor
       set -x EDITOR "nvim"
+      set -x XDG_CONFIG_HOME "/Users/daniel/.config"
 
       # golang
       set -x GOPATH "$HOME/go"
@@ -164,6 +181,9 @@ in
       set -x GO111MODULE "on"
       set -x PATH $PATH $GOPATH/bin
 
+      # tofu
+      set -x TF_PLUGIN_CACHE_DIR "/Users/daniel/.tf-cache"
+
       # ssh agent
       # set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 
@@ -171,6 +191,7 @@ in
       set -x PATH $PATH ${config.home.homeDirectory}/.cargo/bin
       set -x PATH $PATH "${config.home.homeDirectory}/.local/bin"
       set -x PATH $PATH "/usr/local/bin"
+      set -x PATH $PATH "/opt/homebrew/bin"
 
       # latex
       set -x PATH $PATH "/Library/TeX/texbin"
@@ -206,7 +227,18 @@ in
       fish_config theme choose 'Catppuccin Mocha'
 
       # fzf colors
-      set -Ux FZF_DEFAULT_OPTS "--color=bg+:#302D41,spinner:#F8BD96,hl:#F28FAD --color=fg:#D9E0EE,header:#F28FAD,info:#DDB6F2,pointer:#F8BD96 --color=marker:#F8BD96,fg+:#F2CDCD,prompt:#DDB6F2,hl+:#F28FAD"
+      set -Ux FZF_DEFAULT_OPTS "\
+          --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+          --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+          --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+          --color=selected-bg:#45475a \
+          --multi"
+    # set -Ux FZF_DEFAULT_OPTS "
+    #       --color=fg:#908caa,hl:#ebbcba
+    #       --color=fg+:#e0def4,hl+:#ebbcba
+    #       --color=border:#403d52,header:#31748f,gutter:#191724
+    #       --color=spinner:#f6c177,info:#9ccfd8
+    #       --color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
 
       # HACK: re-enter the current dir to trigger direnv
       cd ./
@@ -216,31 +248,32 @@ in
   xdg.configFile."fish/completions/docker.fish".source = "${docker_fish_complete_git}/contrib/completion/fish/docker.fish";
   xdg.configFile."fish/completions/kubectl.fish".source = "${k8s_fish_complete_git}/completions/kubectl.fish";
   xdg.configFile."fish/themes/Catppuccin Mocha.theme".source = "${catppuccin_theme_git}/themes/Catppuccin Mocha.theme";
+  xdg.configFile."fish/themes/Rose Pine.theme".source = "${rosepine_theme_git}/themes/Rosé Pine.theme";
 
   programs.starship = {
     enable = true;
     enableNushellIntegration = false;
     settings = {
       add_newline = false;
-      format = "╭── $username$hostname$directory$git_branch$git_status$golang$python$php$nodejs$rust $fill $time $line_break╰ $character";
+      format = "[╭──](#b4befe) $username$hostname$directory$git_branch$git_status$golang$python$php$nodejs$rust $fill $time $line_break[╰](#b4befe) $character";
       directory = {
-        format = "─── [$path]($style)[$read_only]($read_only_style) ";
-        style = "bold white";
+        format = "[───](#b4befe) [$path]($style)[$read_only]($read_only_style) ";
+        style = "bold #cdd6f4";
         truncation_length = 8;
       };
       time = {
         disabled = false;
         format = "[ $time ]($style) ";
         time_format = "%T";
-        style = "#7F849C";
+        style = "#cdd6f4";
       };
       fill = {
         symbol = "─";
-        style = "#11111B";
+        style = "#45475a";
       };
       git_branch = {
-        format = "─── [$symbol$branch(:$remote_branch)]($style) ";
-        style = "bold green";
+        format = "[───](#b4befe) [$symbol$branch(:$remote_branch)]($style) ";
+        style = "bold #b4befe";
         symbol = "";
       };
       git_status = {
@@ -253,28 +286,28 @@ in
         untracked = "🔍[\($count)\](blue) ";
         stashed = "📦 ";
         modified = "💩[\($count\)](yellow) ";
-        staged = "🚥[\($count\)](green) ";
+        staged = "🚥[\($count\)](#b4befe) ";
         renamed = "👅 ";
         deleted = "🗑 [\($count\)](red) ";
       };
       golang = {
-        format = "─ [$symbol($version)]($style) ";
+        format = "[─](#b4befe) [$symbol($version)]($style) ";
       };
       php = {
-        format = "─ [$symbol($version)]($style) ";
+        format = "[─](#b4befe) [$symbol($version)]($style) ";
         symbol = " ";
       };
       python = {
-        format = "─ [$symbol$pyenv_prefix($version)(\( $virtualenv\))]($style) ";
+        format = "[─](#b4befe) [$symbol$pyenv_prefix($version)(\( $virtualenv\))]($style) ";
       };
       nodejs = {
-        format = "─ [$symbol($version)]($style) ";
+        format = "[─](#b4befe) [$symbol($version)]($style) ";
       };
       rust = {
-        format = "─ [$symbol($version)]($style) ";
+        format = "[─](#b4befe) [$symbol($version)]($style) ";
       };
       nix_shell = {
-        format = "─ [$symbol$state]($style) ";
+        format = "[─](#b4befe) [$symbol$state]($style) ";
         symbol = "❄️ ";
       };
       kubernetes = {
@@ -284,15 +317,15 @@ in
       username = {
         show_always = true;
         format = "[$user]($style) ";
-        style_user = "bold white";
+        style_user = "bold #cdd6f4";
       };
       hostname = {
         ssh_only = false;
-        format = "on [$hostname]($style) ";
-        style = "bold white";
+        format = "[on](#b4befe) [$hostname]($style) ";
+        style = "bold #cdd6f4";
       };
       character = {
-        format = "λ ";
+        format = "[λ](#cdd6f4) ";
       };
     };
   };

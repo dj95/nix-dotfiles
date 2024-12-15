@@ -23,6 +23,8 @@ local ucolors = require('catppuccin.utils.colors')
 -- vim.g.catppuccin_flavour = "mocha"
 vim.o.termguicolors = true
 
+local bg = "#0e0801"
+
 catppuccin.setup({
   flavour = "mocha",
   background = { -- :h background
@@ -38,9 +40,9 @@ catppuccin.setup({
   highlight_overrides = {
     mocha = function(mocha)
       return {
-        FloatBorder = { fg = mocha.mantle, bg = mocha.mantle },
+        FloatBorder = { fg = bg, bg = bg },
         -- folds
-        Folded = { fg = mocha.surface2, bg = mocha.mantle, style = { "italic" } },
+        Folded = { fg = mocha.surface2, bg = bg, style = { "italic" } },
         -- lspsage
         LspFloatWinNormal = { bg = mocha.base },
         -- bufferline
@@ -48,10 +50,10 @@ catppuccin.setup({
         BufferLineTabSelected = { fg = mocha.text, bg = mocha.base },
         BufferLineIndicatorSelected = { fg = mocha.sky, bg = mocha.base },
         -- telescope
-        TelescopeNormal = { bg = mocha.mantle },
-        TelescopeResultsBorder = { bg = mocha.mantle },
-        TelescopeResultsTitle = { bg = mocha.mantle, fg = mocha.mantle },
-        TelescopePreviewBorder = { bg = mocha.mantle },
+        TelescopeNormal = { bg = bg },
+        TelescopeResultsBorder = { bg = bg },
+        TelescopeResultsTitle = { bg = bg, fg = bg },
+        TelescopePreviewBorder = { bg = bg },
         TelescopePrompt = { bg = mocha.surface0 },
         TelescopePromptNormal = { bg = mocha.surface0 },
         TelescopePromptPrefix = { bg = mocha.surface0 },
@@ -61,12 +63,14 @@ catppuccin.setup({
           fg = mocha.subtext0,
           italic = true,
         },
-        TelescopePreviewTitle = { bg = mocha.mantle, fg = mocha.mantle },
+        TelescopePreviewTitle = { bg = bg, fg = bg },
         -- diff
         DiffDelete = { bg = ucolors.darken(mocha.red, 0.08, mocha.base), fg = mocha.surface1},
         -- trailing whitespaces
         Whitespace = { bg = "None", fg = mocha.red },
         -- headlines
+        Quote = { fg = mocha.blue },
+        CodeBlock = { bg = bg },
 		Headline1 = { bg = ucolors.blend(mocha.surface0, mocha.red, 0.9), fg = mocha.red },
 		Headline2 = { bg = ucolors.blend(mocha.surface0, mocha.peach, 0.9), fg = mocha.peach },
 		Headline3 = { bg = ucolors.blend(mocha.surface0, mocha.yellow, 0.9), fg = mocha.yellow },

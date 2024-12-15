@@ -54,7 +54,7 @@ conform.setup({
     php = { "php_cs_fixer" },
     python = { "ruff_fix", "ruff_format" },
     rust = { "rustfmt" },
-    terraform = { "terraformfmt" },
+    terraform = { "tofu_fmt" },
     typescript = { "eslint_d" },
     typescriptreact = { "eslint_d" },
     typst = { "typstfmt" },

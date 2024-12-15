@@ -14,7 +14,6 @@
     libmysqlclient
     mysql-client
     diesel-cli
-    cargo-feature
     cargo-generate
     cargo-nextest
     cargo-wasi

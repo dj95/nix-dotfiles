@@ -17,39 +17,87 @@
     };
   };
 
-  neogit = buildVimPlugin rec {
-    name = "neogit";
-    pname = "${name}";
-    version = "70ad95be902ee69b56410a5cfc690dd03104edb3";
-    src = pkgs.fetchFromGitHub {
-      owner = "NeogitOrg";
-      repo = "neogit";
-      rev = "${version}";
-      sha256 = "sha256-hkb33SOJJMqPXj8xJ1epZBDyH/OCX+MQom8jVPJEXyw=";
-    };
-  };
-
   lsp-progress-nvim = buildVimPlugin rec {
     name = "lsp-progress-nvim";
     pname = "${name}";
-    version = "55a04895ea20c365b670051a3128265d43bdfa3d";
+    version = "d5f4d28efe75ce636bfbe271eb45f39689765aab";
     src = pkgs.fetchFromGitHub {
       owner = "linrongbin16";
       repo = "lsp-progress.nvim";
       rev = "${version}";
-      sha256 = "sha256-lemswtWOf6O96YkUnIFZIsuZPO4oUTNpZRItsl/GSnU=";
+      sha256 = "sha256-OafRT5AnxRTOh7MYofRFjti0+pobKQihymZs/kr5w0A=";
     };
   };
 
-  origami-nvim = buildVimPlugin rec {
-    name = "origami-nvim";
+  magazine-nvim = buildVimPlugin rec {
+    name = "magazine-nvim";
     pname = "${name}";
-    version = "f0a8ac281ca13ff09d534118225a26076e7b91e0";
+    version = "0.4.1";
     src = pkgs.fetchFromGitHub {
-      owner = "chrisgrieser";
-      repo = "nvim-origami";
+      owner = "iguanacucumber";
+      repo = "magazine.nvim";
       rev = "${version}";
-      sha256 = "sha256-iaOWe68MVjFBhDeBpHwEXvDWd0pHjnaeCkJKYmQehFk=";
+      sha256 = "sha256-qZsyQ6C8ODtJLT2XW5Mt2uD/WVrPSJzvGhnDeaAiqPA=";
+    };
+  };
+
+  mag-cmp-lsp = buildVimPlugin rec {
+    name = "mag-cmp-lsp";
+    pname = "${name}";
+    version = "0.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "iguanacucumber";
+      repo = "mag-nvim-lsp";
+      rev = "${version}";
+      sha256 = "sha256-O+b2ftrUgwpVw8VL2UwEyIOQmljjhP8v50I+w72EoFg=";
+    };
+  };
+
+  mag-cmp-lua = buildVimPlugin rec {
+    name = "mag-cmp-lua";
+    pname = "${name}";
+    version = "0.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "iguanacucumber";
+      repo = "mag-nvim-lua";
+      rev = "${version}";
+      sha256 = "sha256-752DI2iwuFQ+bjJKteLiXiMUJkOdq64VFbE+diMGFlo=";
+    };
+  };
+
+  mag-cmp-buffer = buildVimPlugin rec {
+    name = "mag-cmp-buffer";
+    pname = "${name}";
+    version = "0.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "iguanacucumber";
+      repo = "mag-buffer";
+      rev = "${version}";
+      sha256 = "sha256-gqKdlvzParKl+b5u1SkTqAPT11uls0MMC/f1s+TCRKU=";
+    };
+  };
+
+  mag-cmp-cmdline = buildVimPlugin rec {
+    name = "mag-cmp-cmdline";
+    pname = "${name}";
+    version = "0.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "iguanacucumber";
+      repo = "mag-cmdline";
+      rev = "${version}";
+      sha256 = "sha256-O0Lpe4yBhbGumJQSVeyl9NoJn4zLrE+OxdJOrFs7kEo=";
+    };
+  };
+
+  markview-nvim = buildVimPlugin rec {
+    name = "markview-nvim";
+    pname = "${name}";
+    version = "24.0.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "OXY2DEV";
+      repo = "markview.nvim";
+      rev = "v${version}";
+      sha256 = "sha256-Bkwhg4RstOSRx+Jmjq5n2xjEkvyZ4Mx85lWn0YqRHxY=";
     };
   };
 

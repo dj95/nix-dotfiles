@@ -26,6 +26,19 @@
         black "#181825"
         white "#cdd6f4"
       }
+      rose-pine {
+		bg "#403d52"
+		fg "#e0def4"
+		red "#eb6f92"
+		green "#31748f"
+		blue "#9ccfd8"
+		yellow "#f6c177"
+		magenta "#c4a7e7"
+		orange "#fe640b"
+		cyan "#ebbcba"
+		black "#26233a"
+		white "#e0def4"
+      }
     }
 
     styled_underlines true
@@ -60,7 +73,7 @@
         bind "9" { GoToTab 9; SwitchToMode "Normal"; }
         bind "0" { GoToTab 10; SwitchToMode "Normal"; }
         bind "s" {
-          LaunchOrFocusPlugin "zellij:session-manager" {
+          LaunchOrFocusPlugin "zj-smart-sessions" {
             floating true
             move_to_focused_tab true
           };
@@ -76,42 +89,74 @@
       shared_except "tmux" "locked" {
         bind "Ctrl a" { SwitchToMode "Tmux"; }
       }
+      shared_except "locked" {
+        bind "Ctrl q" {
+          LaunchOrFocusPlugin "zj-quit" {
+            floating true
+          }
+        }
+      }
     }
 
     plugins {
       zjstatus location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
         hide_frame_for_single_pane "true"
 
-        format_left  "{mode}#[fg=#89B4FA,bg=#181825,bold] {session}#[bg=#181825] {tabs}"
-        format_right "{notifications}{command_kubectx}#[fg=#424554,bg=#181825]::{command_kubens}{datetime}"
-        format_space "#[bg=#181825]"
+        color_bg     "#0e0801"
+        color_fg     "#9399B2"
+        color_fg_dim "#6C7086"
+        color_blue   "#89b4fa"
+        color_orange "#ffc387"
 
-        notification_format_unread           "#[fg=#89B4FA,bg=#181825,blink]  #[fg=#89B4FA,bg=#181825] {message} "
+        // rose-pine
+        // color_bg     "#33362E"
+        // color_fg     "#9ccfd8"
+        // color_fg_dim "#56949f"
+        // color_blue   "#31748f"
+        // color_orange "#f6c177"
+
+        format_left  "{mode}#[fg=$blue,bg=$bg,bold] {session}#[bg=$bg] {tabs}"
+        format_right "{notifications}{command_aws}{command_kubectx}{command_kubens}{datetime}"
+        format_space "#[bg=$bg]"
+
+        notification_format_unread           "#[fg=$blue,bg=$bg,blink]  #[fg=$blue,bg=$bg] {message} "
         notification_format_no_notifications ""
         notification_show_interval           "10"
 
-        mode_normal          "#[bg=#89B4FA] "
-        mode_tmux            "#[bg=#ffc387] "
+        mode_normal          "#[bg=$blue] "
+        mode_tmux            "#[bg=$orange] "
         mode_default_to_mode "tmux"
 
-        tab_normal               "#[fg=#6C7086,bg=#181825] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-        tab_active               "#[fg=#9399B2,bg=#181825,bold,italic] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-        tab_fullscreen_indicator "□ "
-        tab_sync_indicator       "  "
-        tab_floating_indicator   "󰉈 "
+        tab_normal               "#[fg=$fg_dim,bg=$bg] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+        tab_active               "#[fg=$fg,bg=$bg,bold,italic] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+        tab_sync_indicator       " "
+        tab_fullscreen_indicator "󰊓 "
+        tab_floating_indicator   "󰹙 "
 
         command_kubectx_command  "${pkgs.kubectx}/bin/kubectx -c"
-        command_kubectx_format   "#[fg=#6C7086,bg=#181825,italic] {stdout}"
+        command_kubectx_format   "#[fg=$fg_dim,bg=$bg,italic]{stdout}#[fg=#424554,bg=$bg]::"
         command_kubectx_interval "2"
 
         command_kubens_command  "${pkgs.kubectx}/bin/kubens -c"
-        command_kubens_format   "#[fg=#6C7086,bg=#181825]{stdout} "
+        command_kubens_format   "#[fg=$fg_dim,bg=$bg]{stdout} "
         command_kubens_interval "2"
 
-        datetime          "#[fg=#9399B2,bg=#181825] {format} "
+        command_aws_command    "${pkgs.fish}/bin/fish -c 'if test $AWS_PROFILE; echo -n \"#[fg=#6C7086,bg=#0e0801,italic]aws#[fg=#424554,bg=#0e0801]::#[fg=#6C7086,bg=#0e0801]$AWS_PROFILE  \"; end'"
+        command_aws_format     "{stdout}"
+        command_aws_interval   "2"
+        command_aws_rendermode "dynamic"
+
+        datetime          "#[fg=$fg,bg=$bg] {format} "
         datetime_format   "%A, %d %b %Y %H:%M"
         datetime_timezone "Europe/Berlin"
       }
+
+      zj-quit location="file:${pkgs.zj-quit}/bin/zj-quit.wasm" {
+        confirm_key "y"
+        cancel_key  "n"
+      }
+
+      zj-smart-sessions location="file:${pkgs.zj-smart-sessions}/bin/zj-smart-sessions.wasm"
     }
   '';
 

@@ -10,6 +10,6 @@ final: prev: {
       sha256 = "sha256-p/CrWxv30R4hPioySqRzt7mrljPjPLtEzOjq8pDG8JQ=";
     };
 
-    cargoSha256 = "sha256-pHWpj8I+aQmbxpbhprxTH5Rh+q1/p9FSVAgoN9gwhZo=";
+    cargoHash = "sha256-pHWpj8I+aQmbxpbhprxTH5Rh+q1/p9FSVAgoN9gwhZo=";
   };
 }

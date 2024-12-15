@@ -1,0 +1,42 @@
+#!/bin/bash
+
+### Catppuccin
+export RED=0xfff38ba8
+export YELLOW=0xfff9e2af
+export ORANGE=0xfffab387
+export GREEN=0xffa6e3a1
+export GREEN_BG=0x19a6e3a1
+export LAVENDER=0xffb4befe
+export LAVENDER_BG=0x19b4befe
+export FLAMINGO=0xfff2cdcd
+export FLAMINGO_BG=0x19f2cdcd
+export PINK=0xfff5c2e7
+export PINK_BG=0x19f5c2e7
+
+export OVERLAY1=0xff7f849c
+
+# General bar colors
+export BAR_COLOR=0x00000000
+export LABEL_COLOR=$OVERLAY1
+
+export POPUP_BACKGROUND_COLOR=0xFF272936
+
+# Item colors
+export SPACE_SELECTED=$LAVENDER
+export SPACE_SELECTED_BACKGROUND=$LAVENDER_BG
+export SPACE=$OVERLAY1
+export SPACE_BACKGROUND=0x00000000
+
+export CALENDAR=$LAVENDER
+export CALENDAR_BACKGROUND=$LAVENDER_BG
+
+export BATTERY=$GREEN
+export BATTERY_WARNING=$YELLOW
+export BATTERY_CRITICAL=$RED
+export BATTERY_BACKGROUND=$GREEN_BG
+
+export WIFI=$FLAMINGO
+export WIFI_BACKGROUND=$FLAMINGO_BG
+
+export VOLUME=$PINK
+export VOLUME_BACKGROUND=$PINK_BG

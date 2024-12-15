@@ -1,15 +1,15 @@
 final: prev: {
   mutagen = prev.pkgs.buildGoModule rec {
     pname = "mutagen";
-    version = "0.17.5";
+    version = "0.17.6";
 
-    goPackage = "github.com/mutagen-io/mutagen-compose";
+    goPackage = "github.com/mutagen-io/mutagen";
 
     src = prev.pkgs.fetchFromGitHub {
       owner = "mutagen-io";
       repo = "mutagen";
       rev = "v${version}";
-      sha256 = "sha256-K5Lf6V4wZscOWRvZz5hfUelB5L3XPDLoPIkL7PISe+c=";
+      sha256 = "sha256-GkTMc+gS90M0Jx00nV8+QW/F2iBMmi/oNpwFun18yy4=";
     };
 
     agents = prev.pkgs.fetchzip {
@@ -20,7 +20,7 @@ final: prev: {
       postFetch = ''
         rm $out/mutagen # Keep only mutagen-agents.tar.gz.
       '';
-      sha256 = "sha256-Uzfd1fZJ+x8m6/A2r0WJSiF2OW30WYiPkPQtdaqh4Qc=";
+      sha256 = "sha256-0Oh5k2tKhQzlL8E6vWEMDyZ1JGw329K5E7Y8kam2Sec=";
     };
 
     tags = [ "mutagencli" ];
@@ -37,12 +37,12 @@ final: prev: {
       ln -s ${agents}/mutagen-agents.tar.gz $out/libexec/
     '';
 
-    vendorHash = "sha256-/hF4d6k1Wj5/SxmDhxkaoJ2ULywhehJ5vPpV5kpihkY=";
+    vendorHash = "sha256-Bd2fI2p/8JNoN3Q3sJFuF83YyXUi5j68udW6QnVMViM=";
   };
 
   mutagen-compose = prev.pkgs.buildGoModule rec {
     pname = "mutagen-compose";
-    version = "0.17.5";
+    version = "0.17.6";
 
     goPackage = "github.com/mutagen-io/mutagen-compose";
 
@@ -50,10 +50,10 @@ final: prev: {
       owner = "mutagen-io";
       repo = "mutagen-compose";
       rev = "v${version}";
-      sha256 = "sha256-EkUaxk+zCm1ta1/vjClZHki/MghLvUkCeiW7hST7WEc=";
+      sha256 = "sha256-ZcfwpEfdoSMCGtw5Icj1hXbk5CRYS4LBtdaiX62E4I0=";
     };
 
-    vendorHash = "sha256-siLS53YVQfCwqyuvXXvHFtlpr3RQy2GP2/ZV+Tv/Lqc=";
+    vendorHash = "sha256-XyWi06siSHOKZca0w4WLIFGM63wnF//2rRP4aH5rFAo=";
 
     tags = [ "mutagencompose" ];
   };
