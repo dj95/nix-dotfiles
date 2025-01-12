@@ -17,13 +17,18 @@
 --
 
 local markview = require("markview")
+local presets = require("markview.presets")
 
 markview.setup({
-    code_block = {
+    headings = presets.headings.glow,
+    horizontal_rules = presets.horizontal_rules.thin,
+    code_blocks = {
         style = "language",
-        block_hl = "CodeBlock",
-
+        icons = "",
+        hl = "MarkviewCode",
+        info_hl = "MarkviewCodeInfo",
+        sign_hl = "MarkviewCodeInfo",
+        sign = false,
         pad_char = " ",
-        language_hl = "CodeBlock",
     }
 })

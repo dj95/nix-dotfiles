@@ -19,12 +19,11 @@
 -- load all relevant modules that are language relevant
 require "config.general.colorizer"
 require "config.general.comment"
-require "config.general.copilot"
 require "config.general.folding"
 require "config.general.leap"
 require "config.general.neogit"
-require "config.general.notify"
 require "config.general.oil"
 require "config.general.telescope"
 require "config.general.dressing"
 require "config.general.todo"
+require "config.general.snacks"

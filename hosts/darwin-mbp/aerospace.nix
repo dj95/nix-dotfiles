@@ -6,10 +6,10 @@
 }:
 with lib;
 {
-  # homebrew = {
-  #   enable = true;
-  #   casks = [
-  #     "nikitabobko/tap/aerospace"
-  #   ];
-  # };
+  homebrew = {
+    enable = true;
+    casks = [
+      "ghostty@tip"
+    ];
+  };
 }

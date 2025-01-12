@@ -33,8 +33,7 @@ let
     dressing-nvim
 
     # snippets
-    ultisnips
-    vim-snippets
+    friendly-snippets
 
     # notes
     adr-nvim
@@ -44,34 +43,25 @@ let
     #
 
     # custom tab and statusline
-    lualine-nvim
     lsp-progress-nvim
-    twilight-nvim
 
-    # notifications
-    nvim-notify
+    # general snacks and improvements
+    snacks-nvim
 
     # colorscheme
-    catppuccin-nvim
-    rose-pine
+    gruvbox-nvim
 
     # faster motions
     leap-nvim
     vim-repeat
 
-    # highlight indents
-    indent-blankline-nvim
-
     # file browser
     nvim-web-devicons
 
     # different syntax highlightnings
-    nginx-vim
     comment-nvim
-    vim-kubernetes
     typst-vim
     fzf-lua
-    headlines-nvim
     markview-nvim
     hmts-nvim
     vim-just
@@ -130,9 +120,6 @@ let
 
     # zoom into one split like in tmux
     zoomwintab-vim
-    zen-mode-nvim
-
-    avante-nvim
 
     #
     # Autocompletion
@@ -142,27 +129,12 @@ let
     nvim-lspconfig
 
     # cmp autocompletion
-    # nvim-cmp
-    magazine-nvim
-    mag-cmp-lua
-    mag-cmp-buffer
-    mag-cmp-cmdline
-    # cmp-buffer
-    # cmp-cmdline
-    cmp-emoji
-    cmp-nvim-lsp
-    # cmp-nvim-lua
-    cmp-path
-    cmp-tmux
-    cmp-nvim-ultisnips
-    lspkind-nvim
+    blink-cmp
+    blink-cmp-emoji
     lspsaga-nvim
     conform-nvim
     nvim-lint
-    nvim-colorizer-lua
-    copilot-lua
-    img-clip-nvim
-    avante-nvim
+    nvim-highlight-colors
 
     # java
     nvim-jdtls
@@ -189,7 +161,7 @@ in
     jdt-language-server # java
     lombok # java
     texlab # latex
-    typst-lsp # typst
+    tinymist # typst
     lua-language-server # lua
     rust-analyzer # rust
     nodePackages.intelephense # php
@@ -214,6 +186,7 @@ in
     python311Packages.black
     python311Packages.flake8
     libxml2 # xmllint
+    kdl-fmt
     go-tools
     gherkin-lint
     tflint

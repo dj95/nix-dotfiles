@@ -1,19 +1,19 @@
 #!/bin/bash
 
 ### Catppuccin
-export RED=0xfff38ba8
-export YELLOW=0xfff9e2af
+export RED=0xfffb4934
+export YELLOW=0xfffabd2f
 export ORANGE=0xfffab387
-export GREEN=0xffa6e3a1
-export GREEN_BG=0x19a6e3a1
-export LAVENDER=0xffb4befe
-export LAVENDER_BG=0x19b4befe
-export FLAMINGO=0xfff2cdcd
-export FLAMINGO_BG=0x19f2cdcd
-export PINK=0xfff5c2e7
-export PINK_BG=0x19f5c2e7
+export GREEN=0xffb8bb26
+export GREEN_BG=0x19b8bb26
+export LAVENDER=0xffebdbb2
+export LAVENDER_BG=0x19ebdbb2
+export FLAMINGO=0xfffabd2f
+export FLAMINGO_BG=0x19fabd2f
+export PINK=0xfffb4934
+export PINK_BG=0x19fb4934
 
-export OVERLAY1=0xff7f849c
+export OVERLAY1=0xff928374
 
 # General bar colors
 export BAR_COLOR=0x00000000

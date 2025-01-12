@@ -10,7 +10,7 @@
     frizbee
     karate
     just
-    hugo
+    # hugo
     ollama
     stylelint
   ];

@@ -11,7 +11,7 @@
 
   # copy zellij config, until it is propery supported by home-manager
   xdg.configFile."zellij/config.kdl".text = ''
-    theme "catppuccin"
+    theme "gruvbox-dark"
     themes {
       catppuccin {
         bg "#585b70"
@@ -46,9 +46,10 @@
     serialization_interval 1
 
     env {
-      TERM "xterm-256color"
+      TERM "xterm-ghostty"
     }
 
+    pane_frames false
     ui {
       pane_frames {
         rounded_corners true
@@ -60,6 +61,7 @@
     keybinds {
       tmux {
         bind "Ctrl a" { Write 1; SwitchToMode "Normal"; }
+        bind "[" { SwitchToMode "Scroll"; }
         bind "-" { NewPane "Down"; SwitchToMode "Normal"; }
         bind "|" { NewPane "Right"; SwitchToMode "Normal"; }
         bind "1" { GoToTab 1; SwitchToMode "Normal"; }
@@ -80,10 +82,13 @@
           SwitchToMode "Normal"
         }
         bind "S" {
-          Run "fish" "-c" "dev" {
-            direction "down"
+          LaunchOrFocusPlugin "zj-smart-sessions" {
+            floating true
+            move_to_focused_tab true
+            find_command "${pkgs.bash}/bin/bash /Users/${config.home.username}/.config/zellij/find_command"
+            base_path "/Users/${config.home.username}/Developer"
           };
-          Detach;
+          SwitchToMode "Normal"
         }
       }
       shared_except "tmux" "locked" {
@@ -100,13 +105,20 @@
 
     plugins {
       zjstatus location="file:${pkgs.zjstatus}/bin/zjstatus.wasm" {
-        hide_frame_for_single_pane "true"
+        hide_frame_for_single_pane "false"
 
+        // catppuccin
         color_bg     "#0e0801"
         color_fg     "#9399B2"
         color_fg_dim "#6C7086"
         color_blue   "#89b4fa"
         color_orange "#ffc387"
+
+        // gruvbox-dark
+        color_bg     "#1d2021"
+        color_fg     "#ebdbb2"
+        color_fg_dim "#928374"
+        color_orange "#fe8019"
 
         // rose-pine
         // color_bg     "#33362E"
@@ -115,7 +127,7 @@
         // color_blue   "#31748f"
         // color_orange "#f6c177"
 
-        format_left  "{mode}#[fg=$blue,bg=$bg,bold] {session}#[bg=$bg] {tabs}"
+        format_left  "#[fg=$fg,bg=$bg,bold] {session}#[bg=$bg] {tabs}"
         format_right "{notifications}{command_aws}{command_kubectx}{command_kubens}{datetime}"
         format_space "#[bg=$bg]"
 
@@ -128,7 +140,7 @@
         mode_default_to_mode "tmux"
 
         tab_normal               "#[fg=$fg_dim,bg=$bg] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
-        tab_active               "#[fg=$fg,bg=$bg,bold,italic] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
+        tab_active               "#[fg=$fg,bg=$bg,bold] {index} {name} {fullscreen_indicator}{sync_indicator}{floating_indicator}"
         tab_sync_indicator       " "
         tab_fullscreen_indicator "󰊓 "
         tab_floating_indicator   "󰹙 "
@@ -141,7 +153,7 @@
         command_kubens_format   "#[fg=$fg_dim,bg=$bg]{stdout} "
         command_kubens_interval "2"
 
-        command_aws_command    "${pkgs.fish}/bin/fish -c 'if test $AWS_PROFILE; echo -n \"#[fg=#6C7086,bg=#0e0801,italic]aws#[fg=#424554,bg=#0e0801]::#[fg=#6C7086,bg=#0e0801]$AWS_PROFILE  \"; end'"
+        command_aws_command    "${pkgs.fish}/bin/fish -c 'if test $AWS_PROFILE; echo -n \"#[fg=#928374,bg=#1d2021,italic]aws#[fg=#424554,bg=#1d2021]::#[fg=#928374,bg=#1d2021]$AWS_PROFILE  \"; end'"
         command_aws_format     "{stdout}"
         command_aws_interval   "2"
         command_aws_rendermode "dynamic"
@@ -161,4 +173,12 @@
   '';
 
   xdg.configFile."zellij/layouts".source = ../configs/zellij/layouts;
+  xdg.configFile."zellij/find_command".text = ''
+#!/usr/bin/env bash
+pushd ~/Developer > /dev/null
+fd -t d -u -I \
+    -E node_modules \
+    -E vendor \
+    --no-ignore-vcs '^.git$' | xargs -I{} echo "{}" | sed -re 's|.git/||g'
+  '';
 }

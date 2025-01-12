@@ -44,7 +44,7 @@
   programs.bat = {
     enable = true;
     config = {
-      theme = "Catppuccin-mocha";
+      theme = "gruvbox-dark";
     };
     themes = {
       Catppuccin-mocha = {

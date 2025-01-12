@@ -43,6 +43,8 @@ catppuccin.setup({
         FloatBorder = { fg = bg, bg = bg },
         -- folds
         Folded = { fg = mocha.surface2, bg = bg, style = { "italic" } },
+        -- blink
+        BlinkCmpMenu = { bg = mocha.base },
         -- lspsage
         LspFloatWinNormal = { bg = mocha.base },
         -- bufferline
@@ -111,7 +113,7 @@ catppuccin.setup({
         information = {"undercurl"},
       },
     },
-    cmp = true,
+    blink_cmp = true,
     lsp_saga = true,
     gitsigns = true,
     telescope = true,

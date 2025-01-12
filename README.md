@@ -22,11 +22,11 @@
 
 ## 📋 Installed and configured programs
 
-- wezterm
+- ghostty
 - fish
 - zellij
 - neovim
-- yabai
+- aerospace
 - git
 - ssh
 - programming languages

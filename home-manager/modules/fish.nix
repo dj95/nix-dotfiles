@@ -23,6 +23,12 @@ let
     sha256 = "sha256-wQlYQyqklU/79K2OXRZXg5LvuIugK7vhHgpahpLFaOw=";
   };
 
+  gruvbox_theme_git = pkgs.fetchgit {
+    url = "https://github.com/sujaybokil/fish-gruvbox";
+    rev = "5556465864fdc0ad69c6bec47e730be02ff984a5";
+    sha256 = "sha256-Xy9A6ksrA5Bon08y4qOOfyWHYcwds0Sp560pK7XY1OY=";
+  };
+
   rosepine_theme_git = pkgs.fetchgit {
     url = "https://github.com/rose-pine/fish";
     rev = "38aab5baabefea1bc7e560ba3fbdb53cb91a6186";
@@ -75,6 +81,15 @@ in
           repo = "fish-ssh-agent";
           rev = "fd70a2afdd03caf9bf609746bf6b993b9e83be57";
           sha256 = "e94Sd1GSUAxwLVVo5yR6msq0jZLOn2m+JZJ6mvwQdLs=";
+        };
+      }
+      {
+        name = "theme_gruvbox";
+        src = pkgs.fetchFromGitHub {
+          owner = "tomyun";
+          repo = "base16-fish";
+          rev = "2f6dd973a9075dabccd26f1cded09508180bf5fe";
+          sha256 = "sha256-PebymhVYbL8trDVVXxCvZgc0S5VxI7I1Hv4RMSquTpA=";
         };
       }
     ];
@@ -184,9 +199,6 @@ in
       # tofu
       set -x TF_PLUGIN_CACHE_DIR "/Users/daniel/.tf-cache"
 
-      # ssh agent
-      # set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
-
       # rust + cargo
       set -x PATH $PATH ${config.home.homeDirectory}/.cargo/bin
       set -x PATH $PATH "${config.home.homeDirectory}/.local/bin"
@@ -224,21 +236,22 @@ in
       end
 
       # use the catppuccin theme
-      fish_config theme choose 'Catppuccin Mocha'
+      # fish_config theme choose 'Catppuccin Mocha'
+      # base16-gruvbox-dark-medium
 
       # fzf colors
+      # set -Ux FZF_DEFAULT_OPTS "\
+      #     --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+      #     --color=fg:#fbf1c7,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+      #     --color=marker:#d5c4a1,fg+:#fbf1c7,prompt:#cba6f7,hl+:#f38ba8 \
+      #     --color=selected-bg:#45475a \
+      #     --multi"
+
       set -Ux FZF_DEFAULT_OPTS "\
-          --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-          --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-          --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
-          --color=selected-bg:#45475a \
-          --multi"
-    # set -Ux FZF_DEFAULT_OPTS "
-    #       --color=fg:#908caa,hl:#ebbcba
-    #       --color=fg+:#e0def4,hl+:#ebbcba
-    #       --color=border:#403d52,header:#31748f,gutter:#191724
-    #       --color=spinner:#f6c177,info:#9ccfd8
-    #       --color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
+        --color=fg:#ebdbb2,hl:#b16286 \
+        --color=fg+:#689d6a,bg+:#32302f,hl+:#d3869b \
+        --color=info:#d65d0e,prompt:#458588,pointer:#fe8019 \
+        --color=marker:#8ec07c,spinner:#cc241d,header:#fabd2f"
 
       # HACK: re-enter the current dir to trigger direnv
       cd ./
@@ -255,25 +268,25 @@ in
     enableNushellIntegration = false;
     settings = {
       add_newline = false;
-      format = "[╭──](#b4befe) $username$hostname$directory$git_branch$git_status$golang$python$php$nodejs$rust $fill $time $line_break[╰](#b4befe) $character";
+      format = "[╭──](#d5c4a1) $username$hostname$directory$git_branch$git_status$golang$python$php$nodejs$rust $fill $time $line_break[╰](#d5c4a1) $character";
       directory = {
-        format = "[───](#b4befe) [$path]($style)[$read_only]($read_only_style) ";
-        style = "bold #cdd6f4";
+        format = "[───](#d5c4a1) [$path]($style)[$read_only]($read_only_style) ";
+        style = "bold #fbf1c7";
         truncation_length = 8;
       };
       time = {
         disabled = false;
         format = "[ $time ]($style) ";
         time_format = "%T";
-        style = "#cdd6f4";
+        style = "#fbf1c7";
       };
       fill = {
         symbol = "─";
-        style = "#45475a";
+        style = "#665c54";
       };
       git_branch = {
-        format = "[───](#b4befe) [$symbol$branch(:$remote_branch)]($style) ";
-        style = "bold #b4befe";
+        format = "[───](#d5c4a1) [$symbol$branch(:$remote_branch)]($style) ";
+        style = "bold #d5c4a1";
         symbol = "";
       };
       git_status = {
@@ -286,28 +299,28 @@ in
         untracked = "🔍[\($count)\](blue) ";
         stashed = "📦 ";
         modified = "💩[\($count\)](yellow) ";
-        staged = "🚥[\($count\)](#b4befe) ";
+        staged = "🚥[\($count\)](#d5c4a1) ";
         renamed = "👅 ";
         deleted = "🗑 [\($count\)](red) ";
       };
       golang = {
-        format = "[─](#b4befe) [$symbol($version)]($style) ";
+        format = "[─](#d5c4a1) [$symbol($version)]($style) ";
       };
       php = {
-        format = "[─](#b4befe) [$symbol($version)]($style) ";
+        format = "[─](#d5c4a1) [$symbol($version)]($style) ";
         symbol = " ";
       };
       python = {
-        format = "[─](#b4befe) [$symbol$pyenv_prefix($version)(\( $virtualenv\))]($style) ";
+        format = "[─](#d5c4a1) [$symbol$pyenv_prefix($version)(\( $virtualenv\))]($style) ";
       };
       nodejs = {
-        format = "[─](#b4befe) [$symbol($version)]($style) ";
+        format = "[─](#d5c4a1) [$symbol($version)]($style) ";
       };
       rust = {
-        format = "[─](#b4befe) [$symbol($version)]($style) ";
+        format = "[─](#d5c4a1) [$symbol($version)]($style) ";
       };
       nix_shell = {
-        format = "[─](#b4befe) [$symbol$state]($style) ";
+        format = "[─](#d5c4a1) [$symbol$state]($style) ";
         symbol = "❄️ ";
       };
       kubernetes = {
@@ -317,15 +330,15 @@ in
       username = {
         show_always = true;
         format = "[$user]($style) ";
-        style_user = "bold #cdd6f4";
+        style_user = "bold #fbf1c7";
       };
       hostname = {
         ssh_only = false;
-        format = "[on](#b4befe) [$hostname]($style) ";
-        style = "bold #cdd6f4";
+        format = "[on](#d5c4a1) [$hostname]($style) ";
+        style = "bold #fbf1c7";
       };
       character = {
-        format = "[λ](#cdd6f4) ";
+        format = "[λ](#fbf1c7) ";
       };
     };
   };

@@ -44,6 +44,14 @@
     argo-helm-updater = {
       url = "github:dj95/argo-helm-updater";
     };
+
+    kdl-fmt = {
+      url = "github:dj95/kdl-fmt";
+    };
+
+    ghostty = {
+      url = "github:ghostty-org/ghostty";
+    };
   };
 
   # define the outputs of this flake - especially the home configurations
@@ -79,6 +87,8 @@
         (final: prev: { zj-quit = zj-quit.packages.${prev.system}.default; })
         (final: prev: { zj-smart-sessions = zj-smart-sessions.packages.${prev.system}.default; })
         (final: prev: { argo-helm-updater = argo-helm-updater.packages.${prev.system}.default; })
+        (final: prev: { kdl-fmt = kdl-fmt.packages.${prev.system}.default; })
+        (final: prev: { ghostty = ghostty.packages.${prev.system}.default; })
       ];
     in
     # legacyPackages attribute for declarative channels (used by compat/default.nix)
@@ -115,21 +125,21 @@
                   imports = [
                     # general
                     ./home-manager/modules/aerospace.nix
-                    ./home-manager/modules/alacritty.nix
                     ./home-manager/modules/cli.nix
                     ./home-manager/modules/fish.nix
+                    ./home-manager/modules/ghostty.nix
                     ./home-manager/modules/git.nix
                     ./home-manager/modules/home-manager.nix
                     ./home-manager/modules/lldb.nix
                     ./home-manager/modules/nix-utilities.nix
                     ./home-manager/modules/ssh.nix
-                    ./home-manager/modules/rio.nix
                     ./home-manager/modules/wezterm.nix
                     ./home-manager/modules/zed.nix
                     ./home-manager/modules/zellij.nix
 
                     # development
                     ./home-manager/modules/dev.nix
+                    ./home-manager/modules/helix.nix
                     ./home-manager/modules/neovim.nix
                     ./home-manager/modules/ops.nix
 

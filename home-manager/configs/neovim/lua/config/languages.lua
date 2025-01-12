@@ -18,7 +18,7 @@
 
 -- load all relevant modules that are language relevant
 require "config.languages.autopair"
-require "config.languages.cmp"
+require "config.languages.blink"
 require "config.languages.formatter"
 require "config.languages.inline-diagnostic"
 require "config.languages.linter"

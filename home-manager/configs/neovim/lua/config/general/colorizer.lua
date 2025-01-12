@@ -16,7 +16,10 @@
 -- Date: 25.09.2021
 --
 
-local vim = vim
-local colorizer = require('colorizer')
+local colorizer = require('nvim-highlight-colors')
 
-colorizer.setup({})
+colorizer.setup({
+    render = "virtual",
+    virtual_symbol_position = "eol",
+    enable_named_colors = false,
+})

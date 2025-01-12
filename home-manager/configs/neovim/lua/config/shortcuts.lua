@@ -46,12 +46,11 @@ map("n", "<leader>wc", ":close<CR>")
 map("n", "<leader>gg", require("neogit").open)
 map("n", "<leader>gb", require("gitsigns").toggle_current_line_blame)
 
--- norg
-map("n", "<leader>nn", ":Neorg keybind norg core.dirman.new.note<CR>")
-map("n", "<leader>nj", ":Neorg journal<CR>")
-
 -- adr
 map("n", "<leader>na", function() require('adr').create_from_template() end)
+
+-- zen
+map("n", "<leader>z", function() require('snacks').zen() end)
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
@@ -89,10 +88,6 @@ map("v", "<leader>gp", ":Gen<CR>")
 map("n", "<leader>cc", function()
 	require("mdeval").eval_code_block()
 end)
-
--- avante
-map("n", "<leader>aa", function() require("avante.api").ask() end)
-map("v", "<leader>aa", function() require("avante.api").ask() end)
 
 -- learn things the hard way...
 --

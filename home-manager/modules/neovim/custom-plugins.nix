@@ -1,9 +1,69 @@
-{ pkgs, buildVimPlugin }:
+{ pkgs, buildVimPlugin, git }:
+let
+  version = "0.9.2";
+  src = pkgs.fetchFromGitHub {
+    owner = "Saghen";
+    repo = "blink.cmp";
+    rev = "refs/tags/v${version}";
+    hash = "sha256-uvMB3oU6uxERfkXiweeFS0cCIOgO/ogy7GoYAlXUPDs=";
+  };
+  libExt = if pkgs.stdenv.hostPlatform.isDarwin then "dylib" else "so";
+  blink-fuzzy-lib = pkgs.rustPlatform.buildRustPackage {
+    inherit version src;
+    pname = "blink-fuzzy-lib";
 
+    useFetchCargoVendor = true;
+    cargoHash = "sha256-ISCrUaIWNn+SfNzrAXKqeBbQyEnuqs3F8GAEl90kK7I=";
+
+    nativeBuildInputs = [ git ];
+
+    env = {
+      # TODO: remove this if plugin stops using nightly rust
+      RUSTC_BOOTSTRAP = true;
+    };
+  };
+in
 {
   #
   # General
   #
+
+  blink-cmp = buildVimPlugin rec {
+    name = "blink-cmp";
+    pname = "${name}";
+    version = "0.9.2";
+    preInstall = ''
+      mkdir -p target/release
+      ln -s ${blink-fuzzy-lib}/lib/libblink_cmp_fuzzy.${libExt} target/release/libblink_cmp_fuzzy.${libExt}
+    '';
+    passthru = {
+      updateScript = pkgs.nix-update-script {
+        attrPath = "vimPlugins.blink-cmp.blink-fuzzy-lib";
+      };
+
+      # needed for the update script
+      inherit blink-fuzzy-lib;
+    };
+    src = pkgs.fetchFromGitHub {
+      owner = "Saghen";
+      repo = "blink.cmp";
+      rev = "v${version}";
+      sha256 = "sha256-uvMB3oU6uxERfkXiweeFS0cCIOgO/ogy7GoYAlXUPDs=";
+    };
+  };
+
+  blink-cmp-emoji = buildVimPlugin rec {
+    name = "blink-cmp-emoji";
+    pname = "${name}";
+    version = "81e6c080d1e64c9ef548534c51147fd8063481c8";
+    src = pkgs.fetchFromGitHub {
+      owner = "moyiz";
+      repo = "blink-emoji.nvim";
+      rev = "${version}";
+      sha256 = "sha256-xzBMFc1BwCNEWJGFWQbXSuxZ4WsiTs2gbFdPW+nSBc4=";
+    };
+    nvimSkipModule = ["blink-emoji"];
+  };
 
   adr-nvim = buildVimPlugin rec {
     name = "adr-nvim";
@@ -17,78 +77,6 @@
     };
   };
 
-  lsp-progress-nvim = buildVimPlugin rec {
-    name = "lsp-progress-nvim";
-    pname = "${name}";
-    version = "d5f4d28efe75ce636bfbe271eb45f39689765aab";
-    src = pkgs.fetchFromGitHub {
-      owner = "linrongbin16";
-      repo = "lsp-progress.nvim";
-      rev = "${version}";
-      sha256 = "sha256-OafRT5AnxRTOh7MYofRFjti0+pobKQihymZs/kr5w0A=";
-    };
-  };
-
-  magazine-nvim = buildVimPlugin rec {
-    name = "magazine-nvim";
-    pname = "${name}";
-    version = "0.4.1";
-    src = pkgs.fetchFromGitHub {
-      owner = "iguanacucumber";
-      repo = "magazine.nvim";
-      rev = "${version}";
-      sha256 = "sha256-qZsyQ6C8ODtJLT2XW5Mt2uD/WVrPSJzvGhnDeaAiqPA=";
-    };
-  };
-
-  mag-cmp-lsp = buildVimPlugin rec {
-    name = "mag-cmp-lsp";
-    pname = "${name}";
-    version = "0.1";
-    src = pkgs.fetchFromGitHub {
-      owner = "iguanacucumber";
-      repo = "mag-nvim-lsp";
-      rev = "${version}";
-      sha256 = "sha256-O+b2ftrUgwpVw8VL2UwEyIOQmljjhP8v50I+w72EoFg=";
-    };
-  };
-
-  mag-cmp-lua = buildVimPlugin rec {
-    name = "mag-cmp-lua";
-    pname = "${name}";
-    version = "0.1";
-    src = pkgs.fetchFromGitHub {
-      owner = "iguanacucumber";
-      repo = "mag-nvim-lua";
-      rev = "${version}";
-      sha256 = "sha256-752DI2iwuFQ+bjJKteLiXiMUJkOdq64VFbE+diMGFlo=";
-    };
-  };
-
-  mag-cmp-buffer = buildVimPlugin rec {
-    name = "mag-cmp-buffer";
-    pname = "${name}";
-    version = "0.1";
-    src = pkgs.fetchFromGitHub {
-      owner = "iguanacucumber";
-      repo = "mag-buffer";
-      rev = "${version}";
-      sha256 = "sha256-gqKdlvzParKl+b5u1SkTqAPT11uls0MMC/f1s+TCRKU=";
-    };
-  };
-
-  mag-cmp-cmdline = buildVimPlugin rec {
-    name = "mag-cmp-cmdline";
-    pname = "${name}";
-    version = "0.1";
-    src = pkgs.fetchFromGitHub {
-      owner = "iguanacucumber";
-      repo = "mag-cmdline";
-      rev = "${version}";
-      sha256 = "sha256-O0Lpe4yBhbGumJQSVeyl9NoJn4zLrE+OxdJOrFs7kEo=";
-    };
-  };
-
   markview-nvim = buildVimPlugin rec {
     name = "markview-nvim";
     pname = "${name}";
@@ -98,22 +86,6 @@
       repo = "markview.nvim";
       rev = "v${version}";
       sha256 = "sha256-Bkwhg4RstOSRx+Jmjq5n2xjEkvyZ4Mx85lWn0YqRHxY=";
-    };
-  };
-
-  #
-  # Languages
-  #
-
-  vim-kubernetes = buildVimPlugin rec {
-    name = "vim-kubernetes";
-    pname = "${name}";
-    version = "d5fe1c319b994149b25c9bee1327dc8b3bebe4b7";
-    src = pkgs.fetchFromGitHub {
-      owner = "andrewstuart";
-      repo = "vim-kubernetes";
-      rev = "${version}";
-      sha256 = "sha256-BtuGFF78+OtsJr/PdWOJK9vR+QkqCd4MTwq3DZAfmDo=";
     };
   };
 }

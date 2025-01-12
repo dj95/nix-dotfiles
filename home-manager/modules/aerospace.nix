@@ -28,7 +28,7 @@ after-login-command = []
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
   'exec-and-forget ${pkgs.fish}/bin/fish -c ${pkgs.sketchybar}/bin/sketchybar',
-  'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xff89b4fa inactive_color=0xff45475a width=3.0',
+  'exec-and-forget ${pkgs.jankyborders}/bin/borders active_color=0xffd79921 inactive_color=0xff282828 width=3.0',
 ]
 
 # Start AeroSpace at login
@@ -112,7 +112,7 @@ alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
 cmd-shift-c = 'close'
-cmd-enter = 'exec-and-forget open -n /Users/daniel/Applications/Home\ Manager\ Apps/WezTerm.app'
+cmd-enter = 'exec-and-forget open -n /Applications/Ghostty.app'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 cmd-h = ['focus left', 'move-mouse window-lazy-center']
@@ -202,6 +202,10 @@ esc = 'mode main'
 
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]

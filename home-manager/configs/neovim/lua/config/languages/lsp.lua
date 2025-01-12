@@ -17,12 +17,12 @@
 --
 
 -- imports
-local cmp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
 local vim = vim
+local blink = require("blink.cmp")
 
 -- create capabilities for cmp
-local capabilities = cmp.default_capabilities()
+local capabilities = blink.get_lsp_capabilities()
 
 -- setup single servers
 lspconfig.bashls.setup({ capabilities = capabilities })
@@ -71,7 +71,7 @@ lspconfig.ts_ls.setup({ capabilities = capabilities })
 lspconfig.vimls.setup({ capabilities = capabilities })
 lspconfig.lemminx.setup({ capabilities = capabilities })
 lspconfig.terraformls.setup({ capabilities = capabilities })
-lspconfig.typst_lsp.setup({ capabilities = capabilities })
+lspconfig.tinymist.setup({ capabilities = capabilities })
 lspconfig.vale_ls.setup({ capabilities = capabilities })
 lspconfig.yamlls.setup({
     capabilities = capabilities,
